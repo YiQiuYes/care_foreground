@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<carousel :config="config"></carousel>
+		<carousel class="carousel" :config="config"></carousel>
 		<!-- 功能九宫格 -->
 		<view class="fn_container">
 			<view class="fn_item" v-for="(item, index) in function_list" :key="item.id">
@@ -53,6 +53,11 @@
 </script>
 
 <style lang="scss">
+	.carousel {
+		margin: 20rpx 20rpx 0 20rpx;
+		border-radius: 20rpx;
+	}
+
 	.fn_container {
 		display: flex;
 		flex-wrap: wrap;
