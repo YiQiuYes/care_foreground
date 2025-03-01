@@ -15,20 +15,20 @@
 		</v-tabs>
 
 		<!-- 登陆表单 -->
-		<view class="login_form" v-if="current_method_index === 0">
-			<input class="input_tab" @input="username_input_change" placeholder="请输入账号"
+		<view class="login_form" v-show="current_method_index === 0">
+			<input class="input_tab" @input="username_login_input_change" placeholder="请输入账号"
 				placeholder-style="text-align: center;"></input>
 			<view style="height: 35rpx;"></view>
-			<input class="input_tab" @input="password_input_change" placeholder="请输入密码" password type="text"
+			<input class="input_tab" @input="password_login_input_change" placeholder="请输入密码" password type="text"
 				placeholder-style="text-align: center;"></input>
 		</view>
 
 		<!-- 注册表单 -->
-		<view class="login_form" v-else>
-			<input class="input_tab" @input="username_input_change" placeholder="请输入手机号"
+		<view class="login_form" v-show="current_method_index === 1">
+			<input class="input_tab" @input="username_register_input_change" placeholder="请输入手机号"
 				placeholder-style="text-align: center;"></input>
 			<view style="height: 35rpx;"></view>
-			<input class="input_tab" @input="password_input_change" placeholder="请输入密码" password type="text"
+			<input class="input_tab" @input="password_register_input_change" placeholder="请输入密码" password type="text"
 				placeholder-style="text-align: center;"></input>
 		</view>
 
@@ -52,8 +52,10 @@
 	const title : Ref<string> = ref(subs[0]);
 	const sub_text : Ref<string> = ref(subs[0])
 
-	let username : string = ''
-	let password : string = ''
+	let username_login : string = ''
+	let password_login : string = ''
+	let username_register : string = ''
+	let password_register : string = ''
 
 	const change_login_method = (index : number) => {
 		current_method_index.value = index
@@ -61,12 +63,20 @@
 		sub_text.value = subs[index]
 	}
 
-	const username_input_change = (event : { detail : { value : string } }) => {
-		username = event.detail.value
+	const username_login_input_change = (event : { detail : { value : string } }) => {
+		username_login = event.detail.value
 	}
 
-	const password_input_change = (event : { detail : { value : string } }) => {
-		password = event.detail.value
+	const password_login_input_change = (event : { detail : { value : string } }) => {
+		password_login = event.detail.value
+	}
+
+	const username_register_input_change = (event : { detail : { value : string } }) => {
+		username_register = event.detail.value
+	}
+
+	const password_register_input_change = (event : { detail : { value : string } }) => {
+		password_register = event.detail.value
 	}
 
 	const switch_login_method = () => {
@@ -85,8 +95,8 @@
 		});
 
 		register_api({
-			phone: username,
-			password: password
+			phone: username_register,
+			password: password_register
 		}).then((value) => {
 			if (value.code === 200) {
 				store.commit('set_token', value.data.token)
@@ -123,8 +133,8 @@
 		});
 
 		login_api({
-			phone: username,
-			password: password
+			phone: username_login,
+			password: password_login
 		}).then((value) => {
 			if (value.code === 200) {
 				store.commit('set_token', value.data.token)
