@@ -123,7 +123,7 @@
 		});
 
 		login_api({
-			phone: "",
+			phone: username,
 			password: password
 		}).then((value) => {
 			if (value.code === 200) {
