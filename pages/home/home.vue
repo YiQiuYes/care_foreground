@@ -1,6 +1,7 @@
 <template>
 	<view>
 		<carousel :config="config"></carousel>
+		<!-- 功能九宫格 -->
 		<view class="fn_container">
 			<view class="fn_item" v-for="item in function_list" :key="item.id">
 				<view class="fn_img_container">
@@ -14,21 +15,20 @@
 
 <script setup lang="ts">
 	import { onMounted } from 'vue'
-	import { refresh_token_api } from '@/api/user.ts'
 	import { useStore } from 'vuex'
 	import carousel from '@/components/carousel.vue'
 
 	const store = useStore()
 
 	const function_list = [
-		{ id: 1, img: '/static/images/nursing.png', title: '养老院' },
-		{ id: 2, img: '/static/images/nursing.png', title: '九宫格布局2' },
-		{ id: 3, img: '/static/images/nursing.png', title: '九宫格布局3' },
-		{ id: 4, img: '/static/images/nursing.png', title: '九宫格布局4' },
-		{ id: 5, img: '/static/images/nursing.png', title: '九宫格布局5' },
-		{ id: 6, img: '/static/images/nursing.png', title: '九宫格布局6' },
-		{ id: 7, img: '/static/images/nursing.png', title: '九宫格布局7' },
-		{ id: 8, img: '/static/images/nursing.png', title: '九宫格布局8' }
+		{ id: 1, img: '/static/images/nursing.png', title: '养老机构' },
+		{ id: 2, img: '/static/images/ageing_at_home.png', title: '居家养老' },
+		{ id: 3, img: '/static/images/medical_care.png', title: '医养结合' },
+		{ id: 4, img: '/static/images/housekeeping.png', title: '家政服务' },
+		{ id: 5, img: '/static/images/shopping.png', title: '商城购物' },
+		{ id: 6, img: '/static/images/lease.png', title: '辅具租赁' },
+		{ id: 7, img: '/static/images/health_care.png', title: '医护上门' },
+		{ id: 8, img: '/static/images/news.png', title: '新闻快讯' }
 	]
 
 	const config = {
@@ -46,17 +46,6 @@
 			}
 		]
 	}
-
-	onMounted(() => {
-		refresh_token_api(store.state.setting.refresh_token).then(value => {
-			if (value.code === 200) {
-				store.commit('set_token', value.data.token)
-				store.commit('set_refresh_token', value.data.refreshToken)
-			} else {
-				store.commit('set_login', false)
-			}
-		})
-	})
 </script>
 
 <style lang="scss">
