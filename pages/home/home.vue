@@ -3,11 +3,15 @@
 		<carousel :config="config"></carousel>
 		<!-- 功能九宫格 -->
 		<view class="fn_container">
-			<view class="fn_item" v-for="item in function_list" :key="item.id">
+			<view class="fn_item" v-for="(item, index) in function_list" :key="item.id">
 				<view class="fn_img_container">
 					<image class="fn_img" :src="item.img"></image>
 				</view>
 				<view class="fn_title">{{ item.title }}</view>
+				<!-- 竖向线 -->
+				<view class="vertical_line" v-if="(index + 1) % 4 != 0"></view>
+				<!-- 横向线 -->
+				<view class="horizontal_line" v-if="index < 4"></view>
 			</view>
 		</view>
 	</view>
@@ -61,6 +65,7 @@
 			height: 200rpx;
 			text-align: center;
 			box-sizing: border-box;
+			position: relative;
 
 			.fn_img_container {
 				width: 96rpx;
@@ -82,6 +87,26 @@
 				color: #06121e;
 				font-size: 24rpx;
 				margin-top: 20rpx;
+			}
+
+			.vertical_line {
+				position: absolute;
+				width: 2rpx;
+				height: 100rpx;
+				background-color: #d0d0d5;
+				top: 50%;
+				right: 0;
+				transform: translateY(-50%);
+			}
+
+			.horizontal_line {
+				position: absolute;
+				width: 100rpx;
+				height: 2rpx;
+				background-color: #d0d0d5;
+				bottom: 0;
+				left: 50%;
+				transform: translateX(-50%);
 			}
 		}
 	}
