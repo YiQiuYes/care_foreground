@@ -3,7 +3,7 @@
 		<carousel class="carousel" :config="config"></carousel>
 		<!-- 功能九宫格 -->
 		<view class="fn_container">
-			<view class="fn_item" v-for="(item, index) in function_list" :key="item.id">
+			<view class="fn_item" v-for="(item, index) in function_list" :key="item.id" @click="navigator_fn(item.id)">
 				<view class="fn_img_container">
 					<image class="fn_img" :src="item.img"></image>
 				</view>
@@ -49,6 +49,51 @@
 				src: 'https://pcapi-xiaotuxian-front-devtest.itheima.net/miniapp/uploads/slider_2.jpg'
 			}
 		]
+	}
+
+	const navigator_fn = (index : number) => {
+		switch (index) {
+			case 1:
+				uni.navigateTo({
+					url: '/pages/nursing/nursing'
+				})
+				break
+			case 2:
+				uni.navigateTo({
+					url: '/pages/ageing_at_home/ageing_at_home'
+				})
+				break
+			case 3:
+				uni.navigateTo({
+					url: '/pages/medical_care/medical_care'
+				})
+				break
+			case 4:
+				uni.navigateTo({
+					url: '/pages/housekeeping/housekeeping'
+				})
+				break
+			case 5:
+				uni.navigateTo({
+					url: '/pages/shopping/shopping'
+				})
+				break
+			case 6:
+				uni.navigateTo({
+					url: '/pages/lease/lease'
+				})
+				break
+			case 7:
+				uni.navigateTo({
+					url: '/pages/health_care/health_care'
+				})
+				break
+			case 8:
+				uni.navigateTo({
+					url: '/pages/news/news'
+				})
+				break
+		}
 	}
 </script>
 
