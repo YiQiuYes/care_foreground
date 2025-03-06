@@ -22,6 +22,12 @@
 			"style": {
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path": "pages/news/news",
+			"style": {
+				"navigationBarTitleText": "养老政策"
+			}
 		}
 	],
 	"globalStyle": {
