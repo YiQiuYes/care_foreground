@@ -8,17 +8,16 @@
 		console.log('App Launch')
 		// 是否登录
 		const is_login = store.state.setting.is_login
-		console.log("是否登录" + is_login)
 		if (!is_login) {
 			//不存在则跳转至登录页
 			uni.reLaunch({ url: "/pages/login/login" })
 		}
 	})
 	onShow(() => {
-		console.log('App Show')
+		// console.log('App Show')
 	})
 	onHide(() => {
-		console.log('App Hide')
+		// console.log('App Hide')
 	})
 </script>
 
