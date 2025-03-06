@@ -130,7 +130,7 @@
 		uni.showLoading({
 			title: '正在登录中...',
 			mask: true
-		});
+		})
 
 		login_api({
 			phone: username_login,
@@ -160,7 +160,7 @@
 					duration: 2000
 				})
 			}
-		});
+		})
 	}
 </script>
 
