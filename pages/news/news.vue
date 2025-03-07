@@ -22,11 +22,11 @@
 </template>
 
 <script setup lang="ts">
-	import { Ref, ref } from 'vue'
-	import { onMounted } from 'vue'
+	import { Ref, ref, onMounted } from 'vue'
 	import carousel from '@/components/carousel.vue'
 	import newslist from '@/components/news_list.vue'
 	import { newslist_api, news_slide_api } from '@/api/news.ts'
+	import { onReachBottom } from '@dcloudio/uni-app'
 
 	const config : Ref<{
 		autoplay : boolean,
@@ -64,9 +64,58 @@
 			}
 		})
 
-		newslist_api('notice', 1, 30).then(res => {
-			if (res.code === 200) {
-				notice_news_list.value = res.data as any
+		newslist_api('notice', Math.floor(notice_news_list.value.length / 10) + 1, 10).then(res => {
+			if (res.code === 200 && notice_news_list.value.length < (res.data.total as number)) {
+				notice_news_list.value = notice_news_list.value.concat(res.data.records)
+			}
+		})
+	})
+
+	onReachBottom(() => {
+		uni.showLoading({
+			title: '加载中...'
+		})
+
+		let type = ""
+		let length = 0
+		switch (current_news_type_index.value) {
+			case 0:
+				type = "notice"
+				length = notice_news_list.value.length
+				break
+			case 1:
+				type = "new"
+				length = new_news_list.value.length
+				break
+			case 2:
+				type = "policy"
+				length = policy_news_list.value.length
+				break
+			default:
+				type = "notice"
+				length = notice_news_list.value.length
+				break
+		}
+
+		newslist_api(type, Math.floor(length / 10) + 1, 10).then(res => {
+			uni.hideLoading()
+			if (res.code === 200 && length < (res.data.total as number)) {
+				switch (current_news_type_index.value) {
+					case 0:
+						notice_news_list.value = notice_news_list.value.concat(res.data.records)
+						break
+					case 1:
+						new_news_list.value = new_news_list.value.concat(res.data.records)
+						break
+					case 2:
+						policy_news_list.value = policy_news_list.value.concat(res.data.records)
+						break
+				}
+			} else if (length >= (res.data.total as number)) {
+				uni.showToast({
+					title: '没有更多数据了',
+					icon: 'none'
+				})
 			}
 		})
 	})
@@ -74,32 +123,37 @@
 	const change_news_type_method = (index : number) => {
 		current_news_type_index.value = index
 		let type = ""
+		let length = 0
 		switch (index) {
 			case 0:
 				type = "notice"
+				length = notice_news_list.value.length
 				break
 			case 1:
 				type = "new"
+				length = new_news_list.value.length
 				break
 			case 2:
 				type = "policy"
+				length = policy_news_list.value.length
 				break
 			default:
 				type = "notice"
+				length = notice_news_list.value.length
 				break
 		}
 
-		newslist_api(type, 1, 30).then(res => {
-			if (res.code === 200) {
+		newslist_api(type, Math.floor(length / 10) + 1, 10).then(res => {
+			if (res.code === 200 && length < (res.data.total as number)) {
 				switch (index) {
 					case 0:
-						notice_news_list.value = res.data as any
+						notice_news_list.value = notice_news_list.value.concat(res.data.records)
 						break
 					case 1:
-						new_news_list.value = res.data as any
+						new_news_list.value = new_news_list.value.concat(res.data.records)
 						break
 					case 2:
-						policy_news_list.value = res.data as any
+						policy_news_list.value = policy_news_list.value.concat(res.data.records)
 						break
 				}
 			}
