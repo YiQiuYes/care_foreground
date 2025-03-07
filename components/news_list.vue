@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="news_list">
-			<view class="news_item" v-for="(item, index) in news_list" :key="index">
+			<view class="news_item" v-for="(item, index) in news_list" :key="index" @click="navigator_to_page(index)">
 				<!-- 标题 -->
 				<view class="title">{{ item.title }}</view>
 				<!-- 时间和日期 -->
@@ -30,6 +30,12 @@
 			required: true
 		}
 	})
+
+	const navigator_to_page = (index : number) => {
+		uni.navigateTo({
+			url: `/pages/news_detail/news_detail?data=${JSON.stringify(props.news_list[index])}`
+		})
+	}
 </script>
 
 <style lang="scss">

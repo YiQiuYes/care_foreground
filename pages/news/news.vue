@@ -57,7 +57,7 @@
 			if (res.code === 200) {
 				(res.data as any).forEach((item : { imageSrc : string }) => {
 					config.value.itemList.push({
-						url: '',
+						url: `/pages/news_detail/news_detail?data=${JSON.stringify(item)}`,
 						src: item.imageSrc,
 					})
 				})
