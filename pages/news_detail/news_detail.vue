@@ -8,7 +8,9 @@
 			<view>{{ new Date(news_detail.createTime).toLocaleString() }}</view>
 		</view>
 		<!-- 内容 -->
-		<view class="content">{{ news_detail.content }}</view>
+		<view class="content">
+			<rich-text>{{ news_detail.content }}</rich-text>
+		</view>
 	</view>
 </template>
 
