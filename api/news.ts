@@ -30,3 +30,12 @@ export async function news_slide_api() {
 	const value = await http.get('/news/slide')
 	return value.data as Result
 }
+
+/** 
+ * 新闻详情
+ * @returns
+ */
+export async function get_news_by_id(id : number) {
+	const value = await http.get('/news/getNewById', { params: { id: id } })
+	return value.data as Result
+}

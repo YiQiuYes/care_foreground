@@ -9,7 +9,7 @@
 		</view>
 		<!-- 内容 -->
 		<view class="content">
-			<rich-text>{{ news_detail.content }}</rich-text>
+			<rich-text :nodes="news_detail.content"></rich-text>
 		</view>
 	</view>
 </template>
@@ -17,6 +17,7 @@
 <script setup lang="ts">
 	import { ref, Ref } from 'vue'
 	import { onLoad } from '@dcloudio/uni-app'
+	import { get_news_by_id } from '@/api/news.ts'
 
 	interface NewsDetail {
 		id : number,
@@ -60,6 +61,12 @@
 		uni.setNavigationBarTitle({
 			title: title
 		})
+
+		get_news_by_id(news_detail.value.id).then(res => {
+			if (res.code === 200) {
+				news_detail.value = res.data as any
+			}
+		})
 	})
 </script>
 
@@ -82,6 +89,6 @@
 
 	.content {
 		margin: 25rpx 20rpx 0 20rpx;
-		font-size: 28rpx;
+		font-size: 32rpx;
 	}
 </style>
