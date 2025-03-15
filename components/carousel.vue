@@ -3,10 +3,13 @@
 		<swiper @change="change" :circular="config?.circular || true" :autoplay="config?.autoplay || false"
 			:interval="config?.interval || 3000">
 			<swiper-item v-for="(item, index) in config?.itemList" :key="index">
-				<navigator :url="item.url" :open-type="item.openType || 'navigate'" hover-class="none"
-					class="navigator">
+				<navigator :url="item.url" :open-type="item.openType || 'navigate'" hover-class="none" class="navigator"
+					v-if="item.url.length !== 0">
 					<image mode="aspectFill" class="image" :src="item.src"></image>
 				</navigator>
+				<view v-else class="navigator">
+					<image mode="aspectFill" class="image" :src="item.src"></image>
+				</view>
 			</swiper-item>
 		</swiper>
 		<!-- 指示点 -->

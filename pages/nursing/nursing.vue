@@ -1,31 +1,103 @@
 <template>
-	<!-- 横向容器 -->
-	<view class="border">
-		<view class="container">
-			<!-- 左侧图片 -->
-			<view class="img_container">
-				<image class="img"
-					src="https://pcapi-xiaotuxian-front-devtest.itheima.net/miniapp/uploads/slider_1.jpg">
-				</image>
-			</view>
-			<!-- 信息容器 -->
-			<view class="info_container">
-				<!-- 标题 -->
-				<view class="title">柳空养老院</view>
-				<!-- 营业时间 -->
-				<view class="time">营业时间：24小时</view>
-				<!-- 距离 -->
-				<view class="distance">距离您600公里</view>
-			</view>
-			<!-- 前往图标 -->
-			<view class="head_for_container">
-				<image class="head_for_img" src="/static/images/head_for.png"></image>
+	<view>
+		<!-- 横向容器 -->
+		<view class="border" v-for="(item, index) in nursing_list">
+			<view class="container" @click="navigatorToDetail(index)">
+				<!-- 左侧图片 -->
+				<view class="img_container">
+					<image class="img" :src="item.infoImage"></image>
+				</view>
+				<!-- 信息容器 -->
+				<view class="info_container">
+					<!-- 标题 -->
+					<view class="title">{{item.name}}</view>
+					<!-- 营业时间 -->
+					<view class="time">营业时间：{{item.time}}</view>
+					<!-- 距离 -->
+					<view class="distance">{{distance(item.location)}}</view>
+				</view>
+				<!-- 前往图标 -->
+				<view class="head_for_container">
+					<image class="head_for_img" src="/static/images/head_for.png"></image>
+				</view>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script setup lang="ts">
+	import { nursinglist_api } from '@/api/nursing.ts'
+	import { ref, onMounted } from 'vue'
+	import { onReachBottom } from '@dcloudio/uni-app'
+
+	const nursing_list = ref([])
+	const location = ref({
+		longitude: 0,
+		latitude: 0
+	})
+
+	onMounted(() => {
+		nursinglist_api(Math.floor(nursing_list.value.length / 10) + 1, 10).then((res) => {
+			if (res.code === 200 && nursing_list.value.length < (res.data.total as number)) {
+				nursing_list.value = nursing_list.value.concat(res.data.records)
+			}
+		})
+
+		getLocation()
+	})
+
+	onReachBottom(() => {
+		uni.showLoading({
+			title: '加载中...'
+		})
+
+		nursinglist_api(Math.floor(nursing_list.value.length / 10) + 1, 10).then(res => {
+			uni.hideLoading()
+			if (res.code === 200 && length < (res.data.total as number)) {
+				nursing_list.value = nursing_list.value.concat(res.data.records)
+			} else if (length >= (res.data.total as number)) {
+				uni.showToast({
+					title: '没有更多数据了',
+					icon: 'none'
+				})
+			}
+		})
+	})
+
+	const getLocation = () => {
+		uni.getLocation({
+			success: function (res) {
+				location.value.longitude = res.longitude
+				location.value.latitude = res.latitude
+			}
+		})
+	}
+
+	//根据金纬度计算距离
+	const distance = (nursingLocation : string) => {
+		if (location.value.latitude == 0 && location.value.longitude == 0) {
+			return '加载中...'
+		}
+
+		let rad1 = parseFloat(nursingLocation.split(',')[0]) * Math.PI / 180.0
+		let rad2 = location.value.latitude * Math.PI / 180.0
+		let a = rad1 - rad2
+		let b = parseFloat(nursingLocation.split(',')[1]) * Math.PI / 180.0 - location.value.longitude * Math.PI / 180.0
+
+		let s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) + Math.cos(rad1) * Math.cos(rad2) * Math.pow(Math.sin(b / 2), 2)))
+		s = s * 6378.137
+		s = Math.round(s * 10000) / 10000 // 米
+		s = s / 10 // 公里
+		let str = s.toString();
+		str = str.substring(0, str.indexOf('.') + 2);
+		return '距离您' + str + '公里'
+	}
+
+	const navigatorToDetail = (index : number) => {
+		uni.navigateTo({
+			url: `/pages/nursing_detail/nursing_detail?data=${JSON.stringify(nursing_list.value[index])}`
+		})
+	}
 </script>
 
 <style lang="scss">
