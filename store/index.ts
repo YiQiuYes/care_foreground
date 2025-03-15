@@ -25,12 +25,14 @@ export default createStore({
 	actions: {
 		// 刷新refreshToken
 		async refresh_token(context) {
-			refresh_token_api(context.state.setting.refresh_token).then(value => {
+			return await refresh_token_api(context.state.setting.refresh_token).then(value => {
 				if (value.code === 200) {
 					context.commit('set_token', value.data.token)
 					context.commit('set_refresh_token', value.data.refreshToken)
 					context.commit('set_login', true)
 				}
+
+				return value
 			})
 		},
 	},

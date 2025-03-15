@@ -36,7 +36,29 @@ http.interceptors.response.use(
 				// 开启更新标识
 				isRefreshing = true
 				//带上refresh_token拿到token 并替换现有token
-				await store.dispatch('refresh_token')
+				const isSuccess = await store.dispatch('refresh_token').then((res) => {
+					if (res.code == 401 || res.code == 402 || res.code == 403) {
+						// 重试完了清空这个队列
+						requestList = []
+						//还原标识
+						isRefreshing = false
+						store.commit('set_login', false)
+						uni.showToast({ title: '登录失效，请重新登录！', icon: 'none' })
+
+						// 延迟一秒跳转
+						setTimeout(() => {
+							uni.reLaunch({ url: '/pages/login/login' })
+						}, 2000)
+						return false
+					}
+
+					return true
+				})
+
+				if (!isSuccess) {
+					return Promise.reject(response)
+				}
+
 				//执行请求列表
 				requestList.forEach((cb) => cb())
 				// 重试完了清空这个队列
@@ -53,14 +75,6 @@ http.interceptors.response.use(
 					})
 				})
 			}
-		} else if (response.statusCode == 200 && (code == 401 || code == 402 || code == 403)) {
-			store.commit('set_login', false)
-			uni.showToast({ title: '登录失效，请重新登录！', icon: 'none' })
-
-			// 延迟一秒跳转
-			setTimeout(() => {
-				uni.reLaunch({ url: '/pages/login/login' })
-			}, 2000)
 		}
 
 		return Promise.resolve(response)
