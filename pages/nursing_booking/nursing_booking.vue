@@ -117,7 +117,10 @@ const submit = () => {
                 icon: 'success',
                 duration: 2000
             })
-            uni.navigateBack()
+
+            setTimeout(() => {
+                uni.navigateBack()
+            }, 2000)
         } else {
             uni.showToast({
                 title: '预约失败',

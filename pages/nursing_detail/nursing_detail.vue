@@ -215,8 +215,8 @@ const openLocation = () => {
 }
 
 const bookingNursing = () => {
-	// 创建一个变量去除nursing_detail中的content属性
-	let data = nursing_detail.value
+	// 深拷贝nursing_detail.value
+	let data = JSON.parse(JSON.stringify(nursing_detail.value))
 	data.content = ''
 	uni.navigateTo({
 		url: `/pages/nursing_booking/nursing_booking?data=${JSON.stringify(data)}`
