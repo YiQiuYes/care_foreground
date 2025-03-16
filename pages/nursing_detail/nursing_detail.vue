@@ -117,7 +117,7 @@
 				<button class="btn" @click="callPhone" size="mini">电话咨询</button>
 			</view>
 			<view class="btn-container">
-				<button class="btn" size="mini">立即预约</button>
+				<button class="btn" @click="bookingNursing" size="mini">立即预约</button>
 			</view>
 		</view>
 	</view>
@@ -127,24 +127,8 @@
 import { ref, Ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import carousel from '@/components/carousel.vue'
-import { get_nursing_by_id } from '@/api/nursing.ts'
+import { get_nursing_by_id, NursingDetail } from '@/api/nursing.ts'
 import { getDistance } from '@/utils/index.ts'
-
-interface NursingDetail {
-	id: number,
-	name: string,
-	address: string,
-	phone: string,
-	content: string,
-	time: string,
-	bunkCount: number,
-	workerCount: number,
-	size: number,
-	aptitude: number,
-	images: string[],
-	infoImage: string,
-	location: string
-}
 
 const nursing_detail: Ref<NursingDetail> = ref({
 	id: 0,
@@ -229,9 +213,18 @@ const openLocation = () => {
 		},
 	})
 }
+
+const bookingNursing = () => {
+	// 创建一个变量去除nursing_detail中的content属性
+	let data = nursing_detail.value
+	data.content = ''
+	uni.navigateTo({
+		url: `/pages/nursing_booking/nursing_booking?data=${JSON.stringify(data)}`
+	})
+}
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .carousel {
 	margin: 20rpx 20rpx 0 20rpx;
 	border-radius: 20rpx;

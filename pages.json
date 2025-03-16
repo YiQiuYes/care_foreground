@@ -1,5 +1,6 @@
 {
-	"pages": [{
+	"pages": [
+		{
 			"path": "pages/home/home",
 			"style": {
 				"navigationBarTitleText": "智慧养老平台"
@@ -41,10 +42,15 @@
 			}
 		},
 		{
-			"path" : "pages/nursing_detail/nursing_detail",
-			"style" : 
-			{
-				"navigationBarTitleText" : ""
+			"path": "pages/nursing_detail/nursing_detail",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/nursing_booking/nursing_booking",
+			"style": {
+				"navigationBarTitleText": "预约信息"
 			}
 		}
 	],
@@ -57,7 +63,8 @@
 	"uniIdRouter": {},
 	"tabBar": {
 		"selectedColor": "#b50e03",
-		"list": [{
+		"list": [
+			{
 				"text": "首页",
 				"pagePath": "pages/home/home",
 				"iconPath": "/static/icons/home.png",
