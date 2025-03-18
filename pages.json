@@ -52,6 +52,18 @@
 			"style": {
 				"navigationBarTitleText": "预约信息"
 			}
+		},
+		{
+			"path": "pages/goods/goods",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/goods_detail/goods_detail",
+			"style": {
+				"navigationBarTitleText": ""
+			}
 		}
 	],
 	"globalStyle": {

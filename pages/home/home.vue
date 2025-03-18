@@ -60,32 +60,32 @@
 				break
 			case 2:
 				uni.navigateTo({
-					url: '/pages/ageing_at_home/ageing_at_home'
+					url: '/pages/goods/goods' + '?type=ageingAtHome'
 				})
 				break
 			case 3:
 				uni.navigateTo({
-					url: '/pages/medical_care/medical_care'
+					url: '/pages/goods/goods' + '?type=medicalCare'
 				})
 				break
 			case 4:
 				uni.navigateTo({
-					url: '/pages/housekeeping/housekeeping'
+					url: '/pages/goods/goods' + '?type=housekeeping'
 				})
 				break
 			case 5:
 				uni.navigateTo({
-					url: '/pages/shopping/shopping'
+					url: '/pages/goods/goods' + '?type=goods'
 				})
 				break
 			case 6:
 				uni.navigateTo({
-					url: '/pages/lease/lease'
+					url: '/pages/goods/goods' + '?type=device'
 				})
 				break
 			case 7:
 				uni.navigateTo({
-					url: '/pages/health_care/health_care'
+					url: '/pages/goods/goods' + '?type=healthCare'
 				})
 				break
 			case 8:
