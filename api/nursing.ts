@@ -23,7 +23,10 @@ export interface NursingBookingParams {
 	address: string,
 	phone: string,
 	time: string,
-	content: string
+	content: string,
+	status?: number,
+	nursingName?: string,
+	userName?: string
 }
 
 /**
