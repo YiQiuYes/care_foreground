@@ -64,6 +64,24 @@
 			"style": {
 				"navigationBarTitleText": ""
 			}
+		},
+		{
+			"path": "pages/purchase/purchase",
+			"style": {
+				"navigationBarTitleText": "商品下单"
+			}
+		},
+		{
+			"path": "pages/choice_address/choice_address",
+			"style": {
+				"navigationBarTitleText": "选择地址"
+			}
+		},
+		{
+			"path": "pages/add_address/add_address",
+			"style": {
+				"navigationBarTitleText": "新增地址"
+			}
 		}
 	],
 	"globalStyle": {

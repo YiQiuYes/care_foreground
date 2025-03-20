@@ -10,6 +10,7 @@ export interface Good {
     imageSrc: string,
     isActice: number,
     createTime: string,
+    count: number
 }
 
 /**
