@@ -9,7 +9,7 @@
 		{
 			"path": "pages/cart/cart",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationBarTitleText": "购物车"
 			}
 		},
 		{
