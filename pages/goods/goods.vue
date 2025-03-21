@@ -7,7 +7,7 @@
         </view>
         <!-- 条件tab切换 -->
         <view class="tabs-container">
-            <v-tabs class="tabs" v-model="current_tabs_index" :scroll="false" :tabs="tabs" @change="change_tabs_method"
+            <v-tabs v-model="current_tabs_index" :scroll="false" :tabs="tabs" @change="change_tabs_method"
                 line-color="rgba(255, 143, 169, 1)" bg-color="transparent" color="#959899"
                 active-color="rgba(227, 16, 65, 1)" font-size="31rpx">
             </v-tabs>
