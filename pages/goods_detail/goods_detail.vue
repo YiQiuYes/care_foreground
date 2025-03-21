@@ -79,6 +79,7 @@
 import { onLoad } from '@dcloudio/uni-app'
 import { Ref, ref } from 'vue'
 import { Good } from '@/api/goods.ts'
+import { cartInsert } from '@/api/cart.ts'
 
 const good: Ref<Good> = ref({
     id: 0,
@@ -111,7 +112,24 @@ const countSub = () => {
 }
 
 const addCart = () => {
-    console.log('加入购物车')
+    if (good.value.count === 0) {
+        good.value.count = 1
+    }
+
+    cartInsert(good.value.id, good.value.count).then((res) => {
+        if (res.code === 200) {
+            uni.showToast({
+                title: '加入购物车成功',
+                icon: 'success'
+            })
+            popup.value.close()
+        } else {
+            uni.showToast({
+                title: res.msg,
+                icon: 'none'
+            })
+        }
+    })
 }
 
 const purchase = () => {

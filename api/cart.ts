@@ -34,3 +34,22 @@ export async function cartDelete(id: number): Promise<Result> {
     )
     return value.data as Result
 }
+
+/**
+ * 插入购物车
+ * @param {number} goodsId 商品id
+ * @param {number} count 数量
+ * @returns
+ */
+export async function cartInsert(goodsId: number, count: number): Promise<Result> {
+    const value = await http.get(
+        '/cart/insert',
+        {
+            params: {
+                goodsId: goodsId,
+                count: count
+            }
+        }
+    )
+    return value.data as Result
+}
