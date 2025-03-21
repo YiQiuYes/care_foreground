@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<checkbox-group @change="goodsCheckedChange">
+		<checkbox-group class="cart-container" @change="goodsCheckedChange">
 			<label class="goods-item" v-for="(item, index) in cart_list" :key="index">
 				<checkbox :value="item.id" :checked="item.checked" color="red" />
 				<view class="image-container">
@@ -56,14 +56,15 @@
 
 <script setup lang="ts">
 import { cartList, cartDelete } from '@/api/cart.ts'
-import { onLoad, onReachBottom } from '@dcloudio/uni-app'
+import { onReachBottom, onShow } from '@dcloudio/uni-app'
 import { ref } from 'vue'
 
 const cart_list = ref([])
 
 const allChecked = ref(false)
 
-onLoad(() => {
+onShow(() => {
+	cart_list.value = []
 	getCartList()
 })
 
@@ -101,8 +102,8 @@ const goodsCheckedChange = (e: any) => {
 	allChecked.value = cart_list.value.every(item => item.checked)
 }
 
-const getCartList = () => {
-	cartList(Math.floor(cart_list.value.length / 10) + 1, 10).then(res => {
+const getCartList = async () => {
+	return await cartList(Math.floor(cart_list.value.length / 10) + 1, 10).then(res => {
 		if (res.code === 200 && cart_list.value.length < (res.data.total as number)) {
 			res.data.records.forEach(item => {
 				item.checked = false
@@ -126,6 +127,13 @@ const deleteCart = (id: number) => {
 	cartDelete(id).then(res => {
 		if (res.code === 200) {
 			cart_list.value = cart_list.value.filter(item => item.id !== id)
+			// 判断是否全选
+			allChecked.value = cart_list.value.every(item => item.checked)
+
+			if (cart_list.value.length === 0) {
+				allChecked.value = false
+			}
+
 			uni.showToast({
 				title: '删除成功',
 				icon: 'success'
@@ -161,87 +169,91 @@ const purchase = () => {
 </script>
 
 <style scoped lang="scss">
-.goods-item {
-	display: flex;
-	align-items: center;
-	margin: 20rpx;
-	box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.1);
-	border-radius: 20rpx;
-	padding: 20rpx;
+.cart-container {
+	padding-bottom: 100rpx;
 
-	.image-container {
-		width: 80px;
-		height: 80px;
-		margin-left: 30rpx;
-		border-radius: 15rpx;
-
-		.image {
-			width: 100%;
-			height: 100%;
-		}
-	}
-
-	.goods-info-container {
+	.goods-item {
 		display: flex;
-		flex-direction: column;
+		align-items: center;
+		margin: 20rpx;
+		box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.1);
+		border-radius: 20rpx;
+		padding: 20rpx;
 
-		.title-container {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
+		.image-container {
+			width: 80px;
+			height: 80px;
+			margin-left: 30rpx;
+			border-radius: 15rpx;
 
-			.name {
-				font-size: 35rpx;
-				margin-top: 10rpx;
-				margin-left: 20rpx;
-				margin-right: 20rpx;
-			}
-
-			.delete-container {
-				width: 40rpx;
-				height: 40rpx;
-				margin-right: 10rpx;
-
-				.image {
-					width: 100%;
-					height: 100%;
-				}
+			.image {
+				width: 100%;
+				height: 100%;
 			}
 		}
 
-		.price-container {
+		.goods-info-container {
 			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			width: 420rpx;
+			flex-direction: column;
 
-			.price {
-				font-size: 30rpx;
-				margin-left: 20rpx;
-				margin-top: 25rpx;
-				color: #ff2e63;
-			}
-
-			.count-container {
+			.title-container {
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				margin-top: 30rpx;
-				padding-left: 20rpx;
-				padding-right: 20rpx;
 
-				.count-bar {
-					display: flex;
-					align-items: center;
+				.name {
+					font-size: 35rpx;
+					margin-top: 10rpx;
+					margin-left: 20rpx;
+					margin-right: 20rpx;
+				}
 
-					.btn {
-						border-radius: 10rpx;
+				.delete-container {
+					width: 40rpx;
+					height: 40rpx;
+					margin-right: 10rpx;
+
+					.image {
+						width: 100%;
+						height: 100%;
 					}
+				}
+			}
 
-					.count {
-						font-size: 25rpx;
-						margin-left: 20rpx;
-						margin-right: 20rpx;
+			.price-container {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				width: 420rpx;
+
+				.price {
+					font-size: 30rpx;
+					margin-left: 20rpx;
+					margin-top: 25rpx;
+					color: #ff2e63;
+				}
+
+				.count-container {
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					margin-top: 30rpx;
+					padding-left: 20rpx;
+					padding-right: 20rpx;
+
+					.count-bar {
+						display: flex;
+						align-items: center;
+
+						.btn {
+							border-radius: 10rpx;
+						}
+
+						.count {
+							font-size: 25rpx;
+							margin-left: 20rpx;
+							margin-right: 20rpx;
+						}
 					}
 				}
 			}
@@ -276,12 +288,10 @@ const purchase = () => {
 	}
 
 	.btn {
-		position: fixed;
-		right: 20rpx;
-		bottom: 20rpx;
 		background-color: #7098da;
 		color: #fff;
 		border-radius: 100rpx;
+		margin-left: 200rpx;
 	}
 }
 </style>
