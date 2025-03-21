@@ -54,15 +54,23 @@
 				</view>
 			</view>
 		</view>
+		<!-- 底部固定栏 -->
+		<view class="footer">
+			<view>
+				<button class="btn" @click="logout" size="mini">退出登陆</button>
+			</view>
+		</view>
 	</view>
 </template>
 
 <script setup lang="ts">
-import { getUserInfo } from "@/api/user.ts";
-import { ref } from "vue";
-import { onLoad } from "@dcloudio/uni-app";
+import { getUserInfo } from "@/api/user.ts"
+import { ref } from "vue"
+import { onLoad } from "@dcloudio/uni-app"
+import { useStore } from "vuex"
 
 const user = ref({})
+const store = useStore()
 
 onLoad(() => {
 	getUserInfo().then((res) => {
@@ -76,6 +84,14 @@ const navigateToOrder = (type: string) => {
 	uni.navigateTo({
 		url: `/pages/orders/orders?type=${type}`
 	})
+}
+
+const logout = () => {
+	store.commit('set_login', false)
+	uni.showToast({ title: '退出登录成功！', icon: 'none' })
+	setTimeout(() => {
+		uni.reLaunch({ url: '/pages/login/login' })
+	}, 2000)
 }
 </script>
 
@@ -157,6 +173,23 @@ const navigateToOrder = (type: string) => {
 				color: #999999;
 			}
 		}
+	}
+}
+
+.footer {
+	position: fixed;
+	width: 100%;
+	bottom: 0;
+	background-color: #fff;
+	padding: 20rpx 0;
+	display: flex;
+	justify-content: center;
+
+	.btn {
+		width: 300rpx;
+		background-color: #7098da;
+		color: #fff;
+		border-radius: 100rpx;
 	}
 }
 </style>
