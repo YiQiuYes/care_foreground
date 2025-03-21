@@ -43,6 +43,15 @@ export async function login_api(params : LoginParams) : Promise<Result> {
 }
 
 /**
+ * 获取用户信息
+ * @returns
+ */
+export async function getUserInfo(): Promise<Result> {
+	const value = await http.get('/user/getUserInfo')
+	return value.data as Result;
+}
+
+/**
  * 用户注册
  * @param {object} params 用户信息
  * @param {string} params.password 密码
