@@ -74,7 +74,7 @@ onLoad(() => {
 
 const navigateToOrder = (type: string) => {
 	uni.navigateTo({
-		url: `/pages/order/order?type=${type}`
+		url: `/pages/orders/orders?type=${type}`
 	})
 }
 </script>

@@ -274,6 +274,7 @@ const purchase = () => {
 		display: flex;
 		align-items: center;
 		margin-left: 20rpx;
+		width: 550rpx;
 
 		.tip-text {
 			margin-left: 20rpx;
@@ -291,7 +292,6 @@ const purchase = () => {
 		background-color: #7098da;
 		color: #fff;
 		border-radius: 100rpx;
-		margin-left: 200rpx;
 	}
 }
 </style>

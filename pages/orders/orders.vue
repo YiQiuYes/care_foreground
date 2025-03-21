@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { onLoad, onReachBottom } from '@dcloudio/uni-app'
+import { onLoad, onReachBottom, onShow } from '@dcloudio/uni-app'
 import { Ref, ref } from 'vue'
 import { ordersTypeList, ordersConfirmReceive } from '@/api/orders.ts'
 import { insertComment } from '@/api/comment.ts'
@@ -174,6 +174,10 @@ onLoad((option) => {
         status.value = switchOrderType(typeData)
     }
     getOrderList()
+})
+
+onShow(() => {
+    current_tab_index.value = status.value
 })
 
 onReachBottom(() => {

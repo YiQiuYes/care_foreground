@@ -120,6 +120,14 @@ const totalPrice = () => {
 }
 
 const purchase = () => {
+    if (Object.keys(defaultAddress.value).length === 0) {
+        uni.showToast({
+            title: '请添加收货地址',
+            icon: 'none'
+        })
+        return
+    }
+
     let params = []
     goods.value.forEach(good => {
         let order: OrderCreate = {
