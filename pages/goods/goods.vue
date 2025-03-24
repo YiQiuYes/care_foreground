@@ -111,7 +111,7 @@
 			uni.hideLoading()
 			if (res.code === 200 && goods_list.value.length < (res.data.total as number)) {
 				goods_list.value = goods_list.value.concat(res.data.records)
-			} else if (length >= (res.data.total as number)) {
+			} else if (goods_list.value.length >= (res.data.total as number)) {
 				uni.showToast({
 					title: '没有更多数据了',
 					icon: 'none'
