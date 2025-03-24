@@ -1,6 +1,5 @@
 {
-	"pages": [
-		{
+	"pages": [{
 			"path": "pages/home/home",
 			"style": {
 				"navigationBarTitleText": "智慧养老平台"
@@ -88,6 +87,12 @@
 			"style": {
 				"navigationBarTitleText": "我的订单"
 			}
+		},
+		{
+			"path": "pages/nursing_manager/nursing_manager",
+			"style": {
+				"navigationBarTitleText": "某某某养老院"
+			}
 		}
 	],
 	"globalStyle": {
@@ -99,10 +104,15 @@
 	"uniIdRouter": {},
 	"tabBar": {
 		"selectedColor": "#b50e03",
-		"list": [
-			{
+		"list": [{
 				"text": "首页",
 				"pagePath": "pages/home/home",
+				"iconPath": "/static/icons/home.png",
+				"selectedIconPath": "/static/icons/home_select.png"
+			},
+			{
+				"text": "养老院",
+				"pagePath": "pages/nursing_manager/nursing_manager",
 				"iconPath": "/static/icons/home.png",
 				"selectedIconPath": "/static/icons/home_select.png"
 			},
