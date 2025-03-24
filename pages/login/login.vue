@@ -17,19 +17,19 @@
 		<!-- 登陆表单 -->
 		<view class="login_form" v-show="current_method_index === 0">
 			<input class="input_tab" @input="username_login_input_change" placeholder="请输入账号"
-				placeholder-style="text-align: center;"></input>
+				placeholder-style="text-align: center;" />
 			<view style="height: 35rpx;"></view>
 			<input class="input_tab" @input="password_login_input_change" placeholder="请输入密码" password type="text"
-				placeholder-style="text-align: center;"></input>
+				placeholder-style="text-align: center;" />
 		</view>
 
 		<!-- 注册表单 -->
 		<view class="login_form" v-show="current_method_index === 1">
 			<input class="input_tab" @input="username_register_input_change" placeholder="请输入手机号"
-				placeholder-style="text-align: center;"></input>
+				placeholder-style="text-align: center;" />
 			<view style="height: 35rpx;"></view>
 			<input class="input_tab" @input="password_register_input_change" placeholder="请输入密码" password type="text"
-				placeholder-style="text-align: center;"></input>
+				placeholder-style="text-align: center;" />
 		</view>
 
 		<!-- 提交按钮 -->
