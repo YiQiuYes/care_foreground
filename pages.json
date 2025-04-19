@@ -93,6 +93,36 @@
 			"style": {
 				"navigationBarTitleText": "某某某养老院"
 			}
+		},
+		{
+			"path": "pages/reservation/reservation",
+			"style": {
+				"navigationBarTitleText": "床位预约"
+			}
+		},
+		{
+			"path": "pages/bed_info/bed_info",
+			"style": {
+				"navigationBarTitleText": "床位信息"
+			}
+		},
+		{
+			"path": "pages/allocation/allocation",
+			"style": {
+				"navigationBarTitleText": "分配人员"
+			}
+		},
+		{
+			"path": "pages/older_info/older_info",
+			"style": {
+				"navigationBarTitleText": "老人信息"
+			}
+		},
+		{
+			"path": "pages/medicine/medicine",
+			"style": {
+				"navigationBarTitleText": "用药管理"
+			}
 		}
 	],
 	"globalStyle": {
